@@ -36,5 +36,4 @@ func init() {
 	// is called directly, e.g.:
 	// tiktokCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	tiktokCmd.Flags().BoolVarP(&info, "info", "i", false, "Show only video information without downloading")
-	tiktokCmd.Flags().StringVarP(&out, "output", "o", out, "Directory where to save downloaded video.")
 }

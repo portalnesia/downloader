@@ -30,6 +30,13 @@ import (
 )
 
 func download_video_audio(pw progress.Writer, v *youtube.Video, videoFormat *youtube.Format, filename string) {
+	if checkFfmpeg, err := exec.Command("ffmpeg", "-version").CombinedOutput(); err != nil {
+		err = errors.New(fmt.Sprint(err) + ": " + string(checkFfmpeg))
+		time.Sleep(time.Second)
+		utils.Errorf(err)
+		return
+	}
+
 	audioFormat, err := getAudioFormats(v)
 	if err != nil {
 		utils.Errorf(err)
@@ -102,8 +109,11 @@ func download_video_audio(pw progress.Writer, v *youtube.Video, videoFormat *you
 	output, err := ffmpegVersionCmd.CombinedOutput()
 	if err != nil {
 		err = errors.New(fmt.Sprint(err) + ": " + string(output))
+		videoFile.Close()
+		audioFile.Close()
 		os.Remove(videoFile.Name())
 		os.Remove(audioFile.Name())
+		time.Sleep(time.Second)
 		utils.Errorf(err)
 		return
 	}

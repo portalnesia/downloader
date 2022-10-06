@@ -50,5 +50,4 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	youtubeCmd.Flags().BoolVarP(&info, "info", "i", false, "Show only video information without downloading")
-	youtubeCmd.Flags().StringVarP(&out, "output", "o", out, "Directory where to save downloaded video.")
 }

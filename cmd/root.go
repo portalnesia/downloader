@@ -18,7 +18,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"runtime"
 
 	"github.com/spf13/cobra"
 	"portalnesia.com/downloader/utils"
@@ -52,11 +51,7 @@ func Execute() {
 
 func init() {
 	home, _ := os.UserHomeDir()
-	dir := "Videos"
-	if runtime.GOOS == "windows" {
-		dir = "Video"
-	}
-	out = fmt.Sprintf("%s/%s", home, dir)
+	out = fmt.Sprintf("%s/Videos", home)
 	if err := checkOutput(out, false); err != nil {
 		if err = os.Mkdir(out, os.ModePerm); err != nil {
 			utils.Errorf(err)
@@ -72,4 +67,5 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringVarP(&out, "output", "o", out, "Directory where to save downloaded video.")
 }
